@@ -9,6 +9,7 @@ authorName= 'Cheesy Beans Jr.' #input('Author: ')
 
 pwd = os.getcwd()
 currentDir = '/home/gregory/mp3-organizer/test-on-this-folder'
+#currentDir = '/home/gregory/mp3-organizer/mp'
 
 countFolder = 0
 countWithinFolder = 0
@@ -41,19 +42,20 @@ for folder in folders:
     print(mp3Files)
     for mp3File in mp3Files:
         fileNum = str(mp3Files.index(mp3File) + 1).zfill(2)
-#        fileName = str(fileNum).zfill(2) + folderName + '-' + str(fileNum).zfill(2)
-#        fileName = fileNum + mp3File + '-' + fileNum
         fileNewName = fileNum + ' - ' + bookName + ' ' + folderNum + '-' + fileNum + '.mp3'
         filePath = folderPath + '/' + fileNewName
-        print(mp3File)
-        print('new name: ' + fileNewName)
+        print(mp3File + '--> renamed to --> ' + fileNewName)
         
         os.rename(folderPath + '/' + mp3File, filePath)
         mp3 = eyed3.load(filePath)
-        mp3.tag.artist = authorName
-        mp3.tag.album_artist = authorName
-        mp3.tag.album = bookName + ' ' + folderNum
-        mp3.tag.title = bookName + ' ' + folderNum + '-' + fileNum
-        mp3.tag.track_num = int(fileNum)
-        
-        mp3.tag.save()
+
+        try:
+            mp3.tag.artist = authorName
+            mp3.tag.album_artist = authorName
+            mp3.tag.album = bookName + ' ' + folderNum
+            mp3.tag.title = bookName + ' ' + folderNum + '-' + fileNum
+            mp3.tag.track_num = int(fileNum)
+            
+            mp3.tag.save()
+        except:
+            print('Cannot edit file metadata. No changes made.')
