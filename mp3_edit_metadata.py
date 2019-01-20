@@ -4,12 +4,11 @@ import eyed3
 import os
 import re
 
-bookName = 'How to Change Your Mind' #input('Book name: ')
-authorName= 'Michael Pollan' #input('Author: ')
+bookName = 'A test book' #input('Book name: ')
+authorName= 'Cheesy Beans Jr.' #input('Author: ')
 
 pwd = os.getcwd()
-currentDir = '/home/gregory/Desktop/eyed3-testing'
-currentDir = '/home/gregory/Music/Michael Pollan'
+currentDir = '/home/gregory/mp3-organizer/test-on-this-folder'
 
 countFolder = 0
 countWithinFolder = 0
@@ -19,6 +18,7 @@ countTotal =  0 # Index for total numer of tracks
 # Find all folders in current directory
 folders = [x[0] for x in os.walk(currentDir)]
 folders.remove(currentDir)
+#folders.remove('/home/gregory/mp3-organizer/.git')
 folders.sort()
 print(folders)
 
@@ -38,7 +38,7 @@ for folder in folders:
     r = re.compile('.*\\.mp3$')
     mp3Files = list(filter(r.match, files))
     mp3Files.sort()
-#    print(mp3Files)
+    print(mp3Files)
     for mp3File in mp3Files:
         fileNum = str(mp3Files.index(mp3File) + 1).zfill(2)
 #        fileName = str(fileNum).zfill(2) + folderName + '-' + str(fileNum).zfill(2)
