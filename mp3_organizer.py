@@ -4,13 +4,11 @@ import eyed3
 import os
 import re
 
-bookName = 'A test book' #input('Book name: ')
-authorName= 'Cheesy Beans Jr.' #input('Author: ')
+authorName= 'J.R.R. Tolkien'
+bookName = 'The Hobbit'
 
 pwd = os.getcwd()
-currentDir = '/home/gregory/mp3-organizer/test-on-this-folder'
-#currentDir = '/home/gregory/mp3-organizer/mp'
-
+currentDir = '/home/gregory/Music/J.R.R. Tolkien/The Hobbit'
 countFolder = 0
 countWithinFolder = 0
 countTotal =  0 # Index for total numer of tracks
@@ -19,7 +17,6 @@ countTotal =  0 # Index for total numer of tracks
 # Find all folders in current directory
 folders = [x[0] for x in os.walk(currentDir)]
 folders.remove(currentDir)
-#folders.remove('/home/gregory/mp3-organizer/.git')
 folders.sort()
 print(folders)
 
@@ -44,18 +41,15 @@ for folder in folders:
         fileNum = str(mp3Files.index(mp3File) + 1).zfill(2)
         fileNewName = fileNum + ' - ' + bookName + ' ' + folderNum + '-' + fileNum + '.mp3'
         filePath = folderPath + '/' + fileNewName
-        print(mp3File + '--> renamed to --> ' + fileNewName)
+        print(mp3File)
+        print('new name: ' + fileNewName)
         
         os.rename(folderPath + '/' + mp3File, filePath)
         mp3 = eyed3.load(filePath)
-
-        try:
-            mp3.tag.artist = authorName
-            mp3.tag.album_artist = authorName
-            mp3.tag.album = bookName + ' ' + folderNum
-            mp3.tag.title = bookName + ' ' + folderNum + '-' + fileNum
-            mp3.tag.track_num = int(fileNum)
-            
-            mp3.tag.save()
-        except:
-            print('Cannot edit file metadata. No changes made.')
+        mp3.tag.artist = authorName
+        mp3.tag.album_artist = authorName
+        mp3.tag.album = bookName + ' ' + folderNum
+        mp3.tag.title = bookName + ' ' + folderNum + '-' + fileNum
+        mp3.tag.track_num = int(fileNum)
+        
+        mp3.tag.save()
